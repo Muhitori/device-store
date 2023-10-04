@@ -1,6 +1,7 @@
 import "./globals.css";
+import { MuiThemeProvider } from "@/mui/muiThemeProvider";
+import { ReduxProvider } from "@/store/reduxProvider";
 import type { Metadata } from "next";
-import { Providers } from "@/store/providers";
 
 interface Props {
 	children: React.ReactNode;
@@ -8,14 +9,18 @@ interface Props {
 
 export const metadata: Metadata = {
 	title: "Yushinov store",
-	description: "device store",
+	description: "Device store",
 };
 
 const RootLayout: React.FC<Props> = ({ children }) => {
 	return (
 		<html lang='en'>
 			<body>
-				<Providers>{children}</Providers>
+				<ReduxProvider>
+					<MuiThemeProvider options={{ key: "mui" }}>
+						{children}
+					</MuiThemeProvider>
+				</ReduxProvider>
 			</body>
 		</html>
 	);

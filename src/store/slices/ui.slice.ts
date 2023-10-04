@@ -5,7 +5,7 @@ interface State {
 }
 
 const initialState: State = {
-	theme: "light",
+	theme: "dark",
 };
 
 export const uiSlice = createSlice({
