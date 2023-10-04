@@ -1,22 +1,24 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Providers } from "@/store/providers";
 
-const inter = Inter({ subsets: ["latin"] });
+interface Props {
+	children: React.ReactNode;
+}
 
 export const metadata: Metadata = {
 	title: "Yushinov store",
 	description: "device store",
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+const RootLayout: React.FC<Props> = ({ children }) => {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>{children}</body>
+			<body>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	);
-}
+};
+
+export default RootLayout;
