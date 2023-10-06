@@ -1,5 +1,6 @@
 "use client";
 import { DeviceCard } from "@/components/DeviceCard";
+import { DEVICES } from "@/constants/devices";
 import { useAppDispatch } from "@/store/hooks";
 import { toggleTheme } from "@/store/slices/ui.slice";
 import { Box, Button, Typography } from "@mui/material";
@@ -42,16 +43,9 @@ export default function Home() {
 				flexWrap='wrap'
 				justifyContent='space-between'
 				gap={1}>
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
-				<DeviceCard />
+				{Object.values(DEVICES.iphone).map(({ name, src }) => (
+					<DeviceCard key={name} name={name} src={src} />
+				))}
 			</Box>
 		</Box>
 	);

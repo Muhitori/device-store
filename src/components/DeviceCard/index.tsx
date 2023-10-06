@@ -1,7 +1,9 @@
+import { Device } from "@/types/devices";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import Image from "next/image";
+import { FC } from "react";
 
-export const DeviceCard = () => {
+export const DeviceCard: FC<Device> = ({ name, src }) => {
 	return (
 		<Paper
 			elevation={0}
@@ -19,12 +21,9 @@ export const DeviceCard = () => {
 				position='relative'
 				sx={{
 					width: { xs: "100%", sm: "100%", md: "80%", lg: "50%" },
-					height: { xs: "100%", sm: "100%", md: "100%", lg: "100%" },
+					height: "100%",
 				}}>
-				<Image
-					fill
-					src='/devices/iPhones/11/black.png'
-					alt='device image'></Image>
+				<Image fill src={src} alt={`${name} image`} sizes=''></Image>
 			</Box>
 			<Typography
 				variant='body1'
@@ -32,7 +31,7 @@ export const DeviceCard = () => {
 				fontWeight={800}
 				py={1}
 				sx={{ fontSize: { xs: "8px", sm: "12px", md: "12px", lg: "14px" } }}>
-				iPhone 15 Pro Max
+				{name}
 			</Typography>
 			<Button
 				variant='contained'
