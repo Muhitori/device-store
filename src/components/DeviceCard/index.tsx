@@ -1,9 +1,14 @@
 import { Device } from "@/types/devices";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 
 export const DeviceCard: FC<Device> = ({ name, src }) => {
+	const router = useRouter();
+
+	const onChoose = () => router.push(`/${name}`);
+
 	return (
 		<Paper
 			elevation={0}
@@ -40,7 +45,8 @@ export const DeviceCard: FC<Device> = ({ name, src }) => {
 					width: "80%",
 					borderRadius: 28,
 					fontSize: { xs: "8px", sm: "12px", md: "12px", lg: "14px" },
-				}}>
+				}}
+				onClick={onChoose}>
 				Выбрать
 			</Button>
 		</Paper>
