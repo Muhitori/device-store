@@ -10,15 +10,13 @@ import {
 	SelectChangeEvent,
 	Typography,
 } from "@mui/material";
-import { FC, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
-interface Props {
-	params: { deviceName: string };
-}
+const Step1 = () => {
+	const params = useParams();
 
-const Step1: FC<Props> = ({ params }) => {
 	const [deviceMemories, setDeviceMemories] = useState<string[]>([]);
 	const [deviceColors, setDeviceColors] = useState<string[]>([]);
 
@@ -26,7 +24,7 @@ const Step1: FC<Props> = ({ params }) => {
 	const [selectedColor, setSelectedColor] = useState("");
 
 	const deviceName = useMemo(
-		() => params.deviceName.replace(/%20/g, " "),
+		() => (params.deviceName as string).replace(/%20/g, " "),
 		[params]
 	);
 
@@ -79,9 +77,15 @@ const Step1: FC<Props> = ({ params }) => {
 	);
 };
 
-const Step2: FC<Props> = ({ params }) => {
+const Step2 = () => {
+	const params = useParams();
+
 	const [open, setOpen] = useState(false);
-	const deviceName = params.deviceName.replace(/%20/g, " ");
+
+	const deviceName = useMemo(
+		() => (params.deviceName as string).replace(/%20/g, " "),
+		[params]
+	);
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -104,7 +108,7 @@ const Step2: FC<Props> = ({ params }) => {
 	);
 };
 
-export const DevicePage: FC<Props> = ({ params }) => {
+export default function DevicePage() {
 	const router = useRouter();
 	const [step, setStep] = useState(1);
 
@@ -123,10 +127,8 @@ export const DevicePage: FC<Props> = ({ params }) => {
 			</Box>
 			<Divider />
 			<Box display='flex' justifyContent='center'>
-				{step === 1 ? <Step1 params={params} /> : <Step2 params={params} />}
+				{step === 1 ? <Step1 /> : <Step2 />}
 			</Box>
 		</Box>
 	);
-};
-
-export default DevicePage;
+}
