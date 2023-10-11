@@ -1,10 +1,10 @@
-import { Device } from "@/types/devices";
+import { DevicePreview } from "@/types/devices";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 
-export const DeviceCard: FC<Device> = ({ name, src }) => {
+export const DeviceCard: FC<DevicePreview> = ({ name, src }) => {
 	const router = useRouter();
 
 	const onChoose = () => router.push(`/${name}`);
