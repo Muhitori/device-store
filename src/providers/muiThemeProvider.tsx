@@ -7,7 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme } from "@mui/material/styles";
 import { themeSelector } from "@/store/selectors/ui.selector";
 import { useSelector } from "react-redux";
-import { getThemePalette } from "./palette";
+import { getThemePalette } from "../ui/palette";
 
 interface Props {
 	children: ReactNode;
@@ -26,3 +26,4 @@ export const MuiThemeProvider: FC<Props> = ({ children }) => {
 		</ThemeProvider>
 	);
 };
+

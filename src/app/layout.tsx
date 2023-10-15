@@ -1,7 +1,11 @@
+import { MAX_SNACK } from "@/constants";
 import "./globals.css";
-import { MuiThemeProvider } from "@/mui/muiThemeProvider";
-import { ReduxProvider } from "@/store/reduxProvider";
+import { MuiThemeProvider } from "@/providers/muiThemeProvider";
+import { ReduxProvider } from "@/providers/reduxProvider";
 import type { Metadata } from "next";
+import { SnackbarProvider } from "notistack";
+import { SnackbarGenerator } from "../ui/SnackbarGenerator";
+import { NotistackProvider } from "@/providers/notistackProvider";
 
 interface Props {
 	children: React.ReactNode;
@@ -18,7 +22,7 @@ const RootLayout: React.FC<Props> = ({ children }) => {
 			<body>
 				<ReduxProvider>
 					<MuiThemeProvider options={{ key: "mui" }}>
-						{children}
+						<NotistackProvider>{children}</NotistackProvider>
 					</MuiThemeProvider>
 				</ReduxProvider>
 			</body>
@@ -27,3 +31,4 @@ const RootLayout: React.FC<Props> = ({ children }) => {
 };
 
 export default RootLayout;
+

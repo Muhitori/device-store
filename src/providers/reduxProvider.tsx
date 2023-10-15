@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { store } from "./store";
+import { store } from "../store/store";
 import { Provider } from "react-redux";
 
 interface Props {
@@ -11,3 +11,4 @@ interface Props {
 export const ReduxProvider: FC<Props> = ({ children }) => {
 	return <Provider store={store}>{children}</Provider>;
 };
+
