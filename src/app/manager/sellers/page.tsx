@@ -4,10 +4,10 @@ import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Container } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-export const columns: GridColDef[] = [
+const columns: GridColDef[] = [
 	{ field: "username", headerName: "Telegram", flex: 1 },
 	{ field: "password", headerName: "Password", flex: 1 },
-	{ field: "phone", headerName: "Password", flex: 1 },
+	{ field: "phone", headerName: "Phone", flex: 1 },
 	{ field: "office", headerName: "Office", flex: 1 },
 ];
 
