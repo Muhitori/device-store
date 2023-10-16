@@ -1,3 +1,4 @@
-export default function Manager() {
-	return <div>manager</div>;
+import { redirect } from "next/navigation";
+export default async function ManagerHome() {
+	redirect("/manager/sellers");
 }
