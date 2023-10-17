@@ -9,8 +9,8 @@ import { FormPasswordInput } from "@/components/FormPasswordInput";
 import { snackbarGenerator } from "../../ui/SnackbarGenerator";
 
 const validationSchema = Yup.object().shape({
-	username: Yup.string().required("required"),
-	password: Yup.string().required("required"),
+	username: Yup.string().required("Обязательное поле!"),
+	password: Yup.string().required("Обязательное поле!"),
 });
 
 const initialValues: AuthUser = {
@@ -29,7 +29,7 @@ export default function SignIn() {
 
 	return (
 		<Grid height='100%' container justifyContent='center' alignItems='center'>
-			<Grid item sm={8} pt={1}>
+			<Grid item sm={8} md={3} pt={1}>
 				<Formik
 					innerRef={formRef}
 					initialValues={initialValues}

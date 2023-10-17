@@ -1,6 +1,6 @@
 import { Device } from "@/types/devices";
 import { Box, Button, Paper, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 interface Props {
 	device: Device;
@@ -37,3 +37,4 @@ const Article: FC<{ label: string; value: string }> = ({ label, value }) => {
 		</Box>
 	);
 };
+

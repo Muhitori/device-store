@@ -1,41 +1,48 @@
 export const devicesForUser = [
 	{
+		id: 1,
 		name: "iPhone 11",
 		memory: "30GB",
 		color: "black",
 		price: 100,
 	},
 	{
+		id: 2,
 		name: "iPhone 11",
 		memory: "100GB",
 		color: "black",
 		price: 200,
 	},
 	{
+		id: 3,
 		name: "iPhone 11",
 		memory: "300GB",
 		color: "red",
 		price: 150,
 	},
 	{
+		id: 4,
 		name: "iPhone 11",
 		memory: "30GB",
 		color: "pink",
 		price: 1000,
 	},
 	{
+		id: 5,
 		name: "iPhone 11",
 		memory: "30GB",
 		color: "blue",
 		price: 101,
 	},
 	{
+		id: 6,
 		name: "iPhone 11",
 		memory: "300GB",
 		color: "black",
 		price: 200,
 	},
 	{
+		id: 7,
 		name: "iPhone 11",
 		memory: "100GB",
 		color: "pink",

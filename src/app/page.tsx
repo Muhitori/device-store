@@ -43,8 +43,8 @@ export default function Home() {
 				flexWrap='wrap'
 				justifyContent='space-between'
 				gap={1}>
-				{Object.values(DEVICES.iphone).map(({ name, src }) => (
-					<DeviceCard key={name} name={name} src={src} />
+				{Object.values(DEVICES.iphone).map(({ name, src }, index) => (
+					<DeviceCard key={name} name={name} src={src} timeout={index * 500} />
 				))}
 			</Box>
 		</Box>
