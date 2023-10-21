@@ -4,6 +4,7 @@ import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Container } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
+import { getServerSession } from "next-auth";
 import { useState, useEffect } from "react";
 
 const columns: GridColDef[] = [

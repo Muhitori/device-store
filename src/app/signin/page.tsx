@@ -6,7 +6,8 @@ import { FormikProps, Formik, Form } from "formik";
 import { useRef } from "react";
 import { FormInput } from "@/components/FormInput";
 import { FormPasswordInput } from "@/components/FormPasswordInput";
-import { snackbarGenerator } from "../../ui/SnackbarGenerator";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const validationSchema = Yup.object().shape({
 	username: Yup.string().required("Обязательное поле!"),
@@ -24,7 +25,11 @@ export default function SignIn() {
 	const handleSubmit = (data: AuthUser) => {
 		const { username, password } = data;
 
-		snackbarGenerator.info("Authorized!");
+		signIn("credentials", {
+			username,
+			password,
+			callbackUrl: "/signin/navigate",
+		});
 	};
 
 	return (

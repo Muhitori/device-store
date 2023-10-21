@@ -2,7 +2,6 @@
 import { DeviceLot } from "@/components/DeviceLot";
 import { devicesForUser } from "@/constants";
 import { Box } from "@mui/material";
-import { useState } from "react";
 
 export default function Lots() {
 	return (
