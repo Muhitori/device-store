@@ -1,11 +1,8 @@
-import { MAX_SNACK } from "@/constants";
 import "./globals.css";
-import { MuiThemeProvider } from "@/providers/muiThemeProvider";
-import { ReduxProvider } from "@/providers/reduxProvider";
+import { MuiThemeProvider } from "@/providers/muiTheme.provider";
+import { ReduxProvider } from "@/providers/redux.provider";
 import type { Metadata } from "next";
-import { SnackbarProvider } from "notistack";
-import { SnackbarGenerator } from "../ui/SnackbarGenerator";
-import { NotistackProvider } from "@/providers/notistackProvider";
+import { NotistackProvider } from "@/providers/notistack.provider";
 
 interface Props {
 	children: React.ReactNode;

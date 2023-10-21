@@ -29,8 +29,6 @@ export default function Sellers() {
 		effect();
 	}, []);
 
-	console.log(users);
-
 	const addSellerHandler = () => {
 		snackbarGenerator.success("Продавец добавлен!");
 	};

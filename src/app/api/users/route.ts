@@ -1,10 +1,10 @@
 import dbConnect from "@/lib/dbConnect";
-import { users } from "@/lib/models/user.model";
+import { UserService } from "@/services/User.service";
 import { NextResponse } from "next/server";
 
 export async function GET() {
 	await dbConnect();
-	const appUsers = await users.find({});
+	const appUsers = await UserService.getAll();
 
 	return NextResponse.json({ data: appUsers });
 }
