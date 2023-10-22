@@ -1,5 +1,6 @@
 "use client";
 
+import isSeller from "@/components/HOC/isSeller";
 import { devicesForUser } from "@/constants";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Container } from "@mui/material";
@@ -12,7 +13,7 @@ const columns: GridColDef[] = [
 	{ field: "price", headerName: "Price", flex: 1 },
 ];
 
-export default function Goods() {
+function Goods() {
 	const addGoodsHandler = () => {
 		snackbarGenerator.success("Продавец добавлен!");
 	};
@@ -28,3 +29,5 @@ export default function Goods() {
 		</Container>
 	);
 }
+
+export default isSeller(Goods);

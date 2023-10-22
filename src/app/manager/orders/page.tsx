@@ -1,4 +1,5 @@
 "use client";
+import isManager from "@/components/HOC/isManager";
 import { orders } from "@/constants";
 import { Container } from "@mui/material";
 import { GridColDef, DataGrid } from "@mui/x-data-grid";
@@ -12,10 +13,12 @@ const columns: GridColDef[] = [
 	{ field: "price", headerName: "Price", flex: 1 },
 ];
 
-export default function Orders() {
+function Orders() {
 	return (
 		<Container sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
 			<DataGrid autoHeight rows={orders} columns={columns} />
 		</Container>
 	);
 }
+
+export default isManager(Orders);

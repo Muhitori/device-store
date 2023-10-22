@@ -1,10 +1,10 @@
 "use client";
+import isManager from "@/components/HOC/isManager";
 import { UserModel } from "@/lib/models/user.model";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Container } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
-import { getServerSession } from "next-auth";
 import { useState, useEffect } from "react";
 
 const columns: GridColDef[] = [
@@ -15,7 +15,7 @@ const columns: GridColDef[] = [
 	{ field: "office", headerName: "Office", flex: 1 },
 ];
 
-export default function Sellers() {
+function Sellers() {
 	const [users, setUsers] = useState<UserModel[]>([]);
 
 	useEffect(() => {
@@ -50,3 +50,5 @@ export default function Sellers() {
 		</Container>
 	);
 }
+
+export default isManager(Sellers);

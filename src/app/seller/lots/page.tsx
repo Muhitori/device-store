@@ -1,9 +1,10 @@
 "use client";
 import { DeviceLot } from "@/components/DeviceLot";
+import isSeller from "@/components/HOC/isSeller";
 import { devicesForUser } from "@/constants";
 import { Box } from "@mui/material";
 
-export default function Lots() {
+function Lots() {
 	return (
 		<Box display='flex' justifyContent='center'>
 			<Box maxWidth='700px' display='flex' flexDirection='column' p={2} gap={2}>
@@ -14,3 +15,5 @@ export default function Lots() {
 		</Box>
 	);
 }
+
+export default isSeller(Lots);
