@@ -11,10 +11,15 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter, useParams } from "next/navigation";
+import { snackbarGenerator } from "@/ui/SnackbarGenerator";
+import axios from "axios";
+import { useTelegram } from "@/providers/Telegram.provider";
 
 export default function DevicePage() {
 	const router = useRouter();
 	const params = useParams();
+	const { user } = useTelegram();
+
 	const [deviceMemories, setDeviceMemories] = useState<string[]>([]);
 	const [deviceColors, setDeviceColors] = useState<string[]>([]);
 
@@ -33,12 +38,43 @@ export default function DevicePage() {
 		setDeviceColors([...new Set(devicesForUser.map((device) => device.color))]);
 	}, []);
 
+	useEffect(() => {
+		if (deviceMemories.length) {
+			setSelectedMemory(deviceMemories[0]);
+		}
+	}, [deviceMemories]);
+
+	useEffect(() => {
+		if (deviceColors.length) {
+			setSelectedMemory(deviceColors[0]);
+		}
+	}, [deviceColors]);
+
 	const onMemoryChange = (event: SelectChangeEvent<string>) => {
 		setSelectedMemory(event.target.value);
 	};
 
 	const onColorChange = (event: SelectChangeEvent<string>) => {
 		setSelectedColor(event.target.value);
+	};
+
+	const handleCreateLot = async () => {
+		try {
+			if (!user) {
+				throw new Error("Проблема с телеграмом.");
+			}
+
+			await axios.post("/api/lot", {
+				customerId: user.id,
+				name: deviceName,
+				type: "iphone",
+				memory: selectedMemory,
+				color: selectedColor,
+			});
+			snackbarGenerator.success(`Лот на ${deviceName} создан.`);
+		} catch (err) {
+			snackbarGenerator.error("Возникла ошибка.");
+		}
 	};
 
 	return (
@@ -78,7 +114,9 @@ export default function DevicePage() {
 							onChange={onColorChange}
 						/>
 					)}
-					<Button variant='contained'>Создать лот</Button>
+					<Button variant='contained' onClick={handleCreateLot}>
+						Создать лот
+					</Button>
 				</Box>
 			</Box>
 		</Box>

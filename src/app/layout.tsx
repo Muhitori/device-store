@@ -1,11 +1,12 @@
 import "./globals.css";
-import { MuiThemeProvider } from "@/providers/muiTheme.provider";
-import { ReduxProvider } from "@/providers/redux.provider";
+import { MuiThemeProvider } from "@/providers/MuiTheme.provider";
+import { ReduxProvider } from "@/providers/Redux.provider";
 import type { Metadata } from "next";
-import { NotistackProvider } from "@/providers/notistack.provider";
+import { NotistackProvider } from "@/providers/Notistack.provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import { AuthSessionProvider } from "@/providers/authSession.provider";
+import { AuthSessionProvider } from "@/providers/AuthSession.provider";
+import { TelegramProvider } from "@/providers/Telegram.provider";
 
 interface Props {
 	children: React.ReactNode;
@@ -26,7 +27,7 @@ const RootLayout: React.FC<Props> = async ({ children }) => {
 					<MuiThemeProvider options={{ key: "mui" }}>
 						<NotistackProvider>
 							<AuthSessionProvider session={session}>
-								{children}
+								<TelegramProvider>{children}</TelegramProvider>
 							</AuthSessionProvider>
 						</NotistackProvider>
 					</MuiThemeProvider>

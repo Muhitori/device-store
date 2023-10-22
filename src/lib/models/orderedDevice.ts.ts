@@ -19,5 +19,5 @@ const orderedDeviceSchema = new mongoose.Schema(
 );
 
 export const orderedDevices =
-	mongoose.models.orderedDevices ||
+	mongoose.models.ordered_devices ||
 	mongoose.model("ordered_devices", orderedDeviceSchema);
