@@ -5,6 +5,10 @@ export class UserService {
 		return await users.find({});
 	}
 
+	static async getById(id: string) {
+		return await users.findById(id);
+	}
+
 	static async getBy(user: Partial<UserModel>) {
 		return await users.find({ ...user });
 	}

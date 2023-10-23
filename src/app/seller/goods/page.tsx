@@ -1,7 +1,6 @@
 "use client";
 
 import isSeller from "@/components/HOC/isSeller";
-import { devicesForUser } from "@/constants";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Container } from "@mui/material";
 import { GridColDef, DataGrid } from "@mui/x-data-grid";
@@ -13,6 +12,7 @@ const columns: GridColDef[] = [
 	{ field: "price", headerName: "Price", flex: 1 },
 ];
 
+//TODO
 function Goods() {
 	const addGoodsHandler = () => {
 		snackbarGenerator.success("Продавец добавлен!");
@@ -25,7 +25,7 @@ function Goods() {
 					Добавить
 				</Button>
 			</Box>
-			<DataGrid autoHeight rows={devicesForUser} columns={columns} />
+			<DataGrid autoHeight rows={[]} columns={columns} />
 		</Container>
 	);
 }

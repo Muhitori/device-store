@@ -1,22 +1,27 @@
-import { Device } from "@/types/devices";
+import { ILot } from "@/types/lot";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
-import { ChangeEvent, FC, useState } from "react";
+import axios from "axios";
+import { FC, useState } from "react";
 
 interface Props {
-	device: Device;
+	lot: ILot;
 }
 
-export const DeviceLot: FC<Props> = ({
-	device: { name, color, memory, price },
-}) => {
-	const [value, setValue] = useState("");
+export const DeviceLot: FC<Props> = ({ lot }) => {
+	const { name, color, memory } = lot;
+	const [value, setValue] = useState<string>("");
 
 	const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
 		setValue(event.target.value);
 
-	const clickHandler = () => {
-		snackbarGenerator.success(`Цена ${value} на ${name} выставлена!`);
+	const clickHandler = async () => {
+		try {
+			await axios.post("/api/offer", { ...lot, price: parseFloat(value) });
+			snackbarGenerator.success(`Цена ${value} на ${name} выставлена!`);
+		} catch (err) {
+			snackbarGenerator.error("Возникла ошибка");
+		}
 	};
 
 	return (

@@ -1,6 +1,5 @@
 "use client";
 import { DeviceFilter } from "@/components/DeviceFilter";
-import { devicesForUser } from "@/constants/mockups";
 import {
 	Box,
 	Button,
@@ -14,6 +13,7 @@ import { useRouter, useParams } from "next/navigation";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import axios from "axios";
 import { useTelegram } from "@/providers/Telegram.provider";
+import { colors, memories } from "@/constants";
 
 export default function DevicePage() {
 	const router = useRouter();
@@ -23,8 +23,8 @@ export default function DevicePage() {
 	const [deviceMemories, setDeviceMemories] = useState<string[]>([]);
 	const [deviceColors, setDeviceColors] = useState<string[]>([]);
 
-	const [selectedMemory, setSelectedMemory] = useState("");
-	const [selectedColor, setSelectedColor] = useState("");
+	const [selectedMemory, setSelectedMemory] = useState(memories[0]);
+	const [selectedColor, setSelectedColor] = useState(colors[0]);
 
 	const deviceName = useMemo(
 		() => (params.deviceName as string).replace(/%20/g, " "),
@@ -32,23 +32,9 @@ export default function DevicePage() {
 	);
 
 	useEffect(() => {
-		setDeviceMemories([
-			...new Set(devicesForUser.map((device) => device.memory)),
-		]);
-		setDeviceColors([...new Set(devicesForUser.map((device) => device.color))]);
+		setDeviceMemories(memories);
+		setDeviceColors(colors);
 	}, []);
-
-	useEffect(() => {
-		if (deviceMemories.length) {
-			setSelectedMemory(deviceMemories[0]);
-		}
-	}, [deviceMemories]);
-
-	useEffect(() => {
-		if (deviceColors.length) {
-			setSelectedMemory(deviceColors[0]);
-		}
-	}, [deviceColors]);
 
 	const onMemoryChange = (event: SelectChangeEvent<string>) => {
 		setSelectedMemory(event.target.value);
@@ -64,13 +50,15 @@ export default function DevicePage() {
 				throw new Error("Проблема с телеграмом.");
 			}
 
-			await axios.post("/api/lot", {
+			axios.post("/api/lot", {
 				customerId: user.id,
+				customer: user.username,
 				name: deviceName,
 				type: "iphone",
 				memory: selectedMemory,
 				color: selectedColor,
 			});
+
 			snackbarGenerator.success(`Лот на ${deviceName} создан.`);
 		} catch (err) {
 			snackbarGenerator.error("Возникла ошибка.");

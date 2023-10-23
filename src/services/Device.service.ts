@@ -5,6 +5,10 @@ export class DeviceService {
 		return await devices.find({});
 	}
 
+	static async getById(id: string) {
+		return await devices.findById(id);
+	}
+
 	static async getBy(user: Partial<DeviceModel>) {
 		return await devices.find({ ...user });
 	}

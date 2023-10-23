@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 export interface LotModel {
 	customerId: string;
+	customer: string;
+	sellerId: string;
 	orderedDeviceId: string;
 	createdAt: string;
 }
@@ -9,8 +11,9 @@ export interface LotModel {
 const lotSchema = new mongoose.Schema(
 	{
 		customerId: String,
+		customer: String,
+		sellerId: String,
 		orderedDeviceId: String,
-		office: String,
 	},
 	{ timestamps: { createdAt: "created" } }
 );

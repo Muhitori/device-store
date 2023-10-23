@@ -5,6 +5,10 @@ export class OrderService {
 		return await orders.find({});
 	}
 
+	static async getById(id: string) {
+		return await orders.findById(id);
+	}
+
 	static async getBy(user: Partial<OrderModel>) {
 		return await orders.find({ ...user });
 	}

@@ -8,6 +8,10 @@ export class OrderedDeviceService {
 		return await orderedDevices.find({});
 	}
 
+	static async getById(id: string) {
+		return await orderedDevices.findById(id);
+	}
+
 	static async getBy(user: Partial<OrderedDeviceModel>) {
 		return await orderedDevices.find({ ...user });
 	}

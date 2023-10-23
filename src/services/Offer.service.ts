@@ -5,6 +5,10 @@ export class OfferService {
 		return await offers.find({});
 	}
 
+	static async getById(id: string) {
+		return await offers.findById(id);
+	}
+
 	static async getBy(user: Partial<OfferModel>) {
 		return await offers.find({ ...user });
 	}
@@ -22,6 +26,10 @@ export class OfferService {
 	}
 
 	static async delete(id: string) {
-		return await offers.deleteOne({ id });
+		return await offers.findByIdAndDelete(id);
+	}
+
+	static async deleteMany(offer: Partial<OfferModel>) {
+		return await offers.deleteMany({ ...offer });
 	}
 }

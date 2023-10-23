@@ -5,6 +5,10 @@ export class LotService {
 		return await lots.find({});
 	}
 
+	static async getById(id: string) {
+		return await lots.findById(id);
+	}
+
 	static async getBy(user: Partial<LotModel>) {
 		return await lots.find({ ...user });
 	}
@@ -21,7 +25,11 @@ export class LotService {
 		return await lots.updateOne({ id }, { ...user });
 	}
 
-	static async delete(id: string) {
-		return await lots.deleteOne({ id });
+	static async delete(_id: string) {
+		return await lots.deleteOne({ _id });
+	}
+
+	static async deleteMany(offer: Partial<LotModel>) {
+		return await lots.deleteOne({ ...offer });
 	}
 }

@@ -42,3 +42,7 @@ export const DEVICES = {
 		},
 	},
 };
+
+export const memories = ["50GB", "100GB", "300GB"];
+export const colors = ["black", "white", "pink", "blue", "red"];
+
