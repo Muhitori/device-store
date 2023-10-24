@@ -1,11 +1,11 @@
 "use client";
 import isManager from "@/components/HOC/isManager";
-import { UserModel } from "@/lib/models/user.model";
+import { Loading } from "@/components/Loading";
+import { usersFetcher } from "@/services/fetchers/users";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Container } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import useSWR from "swr";
 
 const columns: GridColDef[] = [
 	{ field: "username", headerName: "Telegram", flex: 1 },
@@ -16,19 +16,12 @@ const columns: GridColDef[] = [
 ];
 
 function Sellers() {
-	const [users, setUsers] = useState<UserModel[]>([]);
-
-	useEffect(() => {
-		const effect = async () => {
-			const {
-				data: { data: users },
-			} = await axios.get("/api/users");
-
-			setUsers(users);
-		};
-
-		effect();
-	}, []);
+	const {
+		data: users,
+		error,
+		isLoading,
+		mutate,
+	} = useSWR("users", usersFetcher);
 
 	const addSellerHandler = () => {
 		snackbarGenerator.success("Продавец добавлен!");
@@ -43,9 +36,11 @@ function Sellers() {
 			</Box>
 			<DataGrid
 				autoHeight
-				rows={users}
+				loading={isLoading}
+				rows={users || []}
 				columns={columns}
 				getRowId={(row) => row._id}
+				slots={{ loadingOverlay: Loading }}
 			/>
 		</Container>
 	);

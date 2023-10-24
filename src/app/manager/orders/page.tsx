@@ -1,10 +1,10 @@
 "use client";
 import isManager from "@/components/HOC/isManager";
-import { OrderModel } from "@/lib/models/order.model";
+import { Loading } from "@/components/Loading";
+import { ordersFetcher } from "@/services/fetchers";
 import { Container } from "@mui/material";
 import { GridColDef, DataGrid } from "@mui/x-data-grid";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import useSWR from "swr";
 
 const columns: GridColDef[] = [
 	{ field: "customer", headerName: "Customer", flex: 1 },
@@ -20,27 +20,17 @@ const columns: GridColDef[] = [
 ];
 
 function Orders() {
-	const [orders, setOrders] = useState<OrderModel[]>([]);
-
-	useEffect(() => {
-		const effect = async () => {
-			const {
-				data: { data: orders },
-			} = await axios.get("/api/order");
-
-			setOrders(orders);
-		};
-
-		effect();
-	}, []);
+	const { data: orders, error, isLoading } = useSWR("orders", ordersFetcher);
 
 	return (
 		<Container sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
 			<DataGrid
 				autoHeight
-				rows={orders}
+				loading={isLoading}
+				rows={orders || []}
 				columns={columns}
 				getRowId={(row) => row._id}
+				slots={{ loadingOverlay: Loading }}
 			/>
 		</Container>
 	);

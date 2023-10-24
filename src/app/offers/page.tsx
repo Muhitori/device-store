@@ -1,31 +1,24 @@
 "use client";
 import { DeviceOffer } from "@/components/DeviceOffer";
 import { InfoDialog } from "@/components/InfoDialog";
+import { Loading } from "@/components/Loading";
 import { useTelegram } from "@/providers/Telegram.provider";
+import { offersFetcher } from "@/services/fetchers";
 import { IOffer } from "@/types/offer";
-import { Box, Button, Typography } from "@mui/material";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
+import useSWR from "swr";
 
 export default function CreateOrderPage() {
 	const { user } = useTelegram();
-	const [offers, setOffers] = useState<IOffer[]>([]);
 
 	const [open, setOpen] = useState(false);
 
-	useEffect(() => {
-		const effect = async () => {
-			if (!user) return;
-
-			const {
-				data: { data: offers },
-			} = await axios.get(`/api/offer?customerId=${user?.id}`);
-
-			setOffers(offers);
-		};
-
-		effect();
-	}, [user]);
+	const {
+		data: offers,
+		error,
+		isLoading,
+	} = useSWR("offers", offersFetcher(user?.id));
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -36,13 +29,15 @@ export default function CreateOrderPage() {
 				<Typography variant='h5' color='secondary' textAlign='center' pb={2}>
 					Поставщики предлагают такие цены по вашим запросам
 				</Typography>
-				{offers.map((offer) => (
-					<DeviceOffer
-						key={offer._id}
-						offer={offer}
-						onOrderClick={handleOpen}
-					/>
-				))}
+				{isLoading && <Loading />}
+				{offers &&
+					offers.map((offer: IOffer) => (
+						<DeviceOffer
+							key={offer._id}
+							offer={offer}
+							onOrderClick={handleOpen}
+						/>
+					))}
 				<InfoDialog
 					open={open}
 					onClose={handleClose}

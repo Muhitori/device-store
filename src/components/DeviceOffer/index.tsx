@@ -3,6 +3,7 @@ import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { FC } from "react";
+import { useSWRConfig } from "swr";
 
 interface Props {
 	offer: IOffer;
@@ -10,11 +11,14 @@ interface Props {
 }
 
 export const DeviceOffer: FC<Props> = ({ offer, onOrderClick }) => {
+	const { mutate } = useSWRConfig();
 	const { name, color, memory, price } = offer;
 
 	const createOrderHandler = async () => {
 		try {
-			await axios.post("/api/order", offer);
+			await axios.post("/api/orders", offer);
+
+			mutate("offer");
 			onOrderClick();
 		} catch (err) {
 			snackbarGenerator.error("Возникла ошибка.");
@@ -23,7 +27,9 @@ export const DeviceOffer: FC<Props> = ({ offer, onOrderClick }) => {
 
 	const cancelOrderHandler = async () => {
 		try {
-			await axios.delete(`/api/offer?id=${offer._id}`);
+			await axios.delete(`/api/offers?id=${offer._id}`);
+
+			mutate("offer");
 			snackbarGenerator.success("Предложение удалено.");
 		} catch (err) {
 			snackbarGenerator.error("Возникла ошибка.");

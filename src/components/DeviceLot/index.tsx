@@ -3,12 +3,14 @@ import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { FC, useState } from "react";
+import { useSWRConfig } from "swr";
 
 interface Props {
 	lot: ILot;
 }
 
 export const DeviceLot: FC<Props> = ({ lot }) => {
+	const { mutate } = useSWRConfig();
 	const { name, color, memory } = lot;
 	const [value, setValue] = useState<string>("");
 
@@ -17,7 +19,9 @@ export const DeviceLot: FC<Props> = ({ lot }) => {
 
 	const clickHandler = async () => {
 		try {
-			await axios.post("/api/offer", { ...lot, price: parseFloat(value) });
+			await axios.post("/api/offers", { ...lot, price: parseFloat(value) });
+
+			mutate("lots");
 			snackbarGenerator.success(`Цена ${value} на ${name} выставлена!`);
 		} catch (err) {
 			snackbarGenerator.error("Возникла ошибка");
