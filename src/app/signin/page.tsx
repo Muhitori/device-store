@@ -7,7 +7,6 @@ import { useRef } from "react";
 import { FormInput } from "@/components/FormInput";
 import { FormPasswordInput } from "@/components/FormPasswordInput";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
 
 const validationSchema = Yup.object().shape({
 	username: Yup.string().required("Обязательное поле!"),

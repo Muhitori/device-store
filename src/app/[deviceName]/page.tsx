@@ -1,5 +1,5 @@
 "use client";
-import { DeviceFilter } from "@/components/DeviceFilter";
+import { Select } from "@/components/Select";
 import {
 	Box,
 	Button,
@@ -87,7 +87,7 @@ export default function DevicePage() {
 				Когда вы определитесь с тем, какой из лотов вам больше подходит, с вами свяжется менеджер, для уточнения информации и обработки вашего заказа.`}
 					</Typography>
 					{!!deviceMemories.length && (
-						<DeviceFilter
+						<Select
 							value={selectedMemory}
 							label='Память'
 							values={deviceMemories}
@@ -95,7 +95,7 @@ export default function DevicePage() {
 						/>
 					)}
 					{!!deviceColors.length && (
-						<DeviceFilter
+						<Select
 							value={selectedColor}
 							label='Цвет'
 							values={deviceColors}

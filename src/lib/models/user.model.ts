@@ -1,10 +1,10 @@
+import { IRole } from "@/types/users";
 import mongoose from "mongoose";
-
-export type IRole = "manager" | "seller";
 
 export interface UserModel {
 	username: string;
 	password: string;
+	telegramId: string;
 	role: IRole;
 	phone: string;
 	office: string;
@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
 	{
 		username: String,
 		password: String,
+		telegramId: String,
 		role: String,
 		phone: String,
 		office: String,

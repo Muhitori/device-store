@@ -19,7 +19,7 @@ export default function ManagerLayout({ children }: Props) {
 	return (
 		<Box width='100%' height='100%'>
 			<Tabs variant='fullWidth' value={tab} onChange={handleTabChange}>
-				<Tab label='Продавцы' value='sellers' />
+				<Tab label='Пользователи' value='users' />
 				<Tab label='Заказы' value='orders' />
 				{/* <Tab label='Партнёрка' value='partners' />
 				<Tab label='Статистика' value='statistics' /> */}
