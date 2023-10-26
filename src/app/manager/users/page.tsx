@@ -7,13 +7,24 @@ import { usersFetcher } from "@/services/fetchers/users";
 import { IRole, IUser } from "@/types/users";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import { Box, Button, Container, Grid } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+	DataGrid,
+	GridActionsCellItem,
+	GridColDef,
+	GridRowEditStopReasons,
+} from "@mui/x-data-grid";
 import { Form, Formik, FormikProps } from "formik";
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import useSWR from "swr";
 import { FormInput } from "@/components/FormInput";
 import { FormSelect } from "@/components/FormSelect";
 import axios from "axios";
+import {
+	ActionColumn,
+	InputColumn,
+	SelectColumn,
+} from "@/app/manager/users/columns";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const validationSchema = Yup.object().shape({
 	username: Yup.string().required("Обязательное поле!"),
@@ -36,11 +47,42 @@ const initialValues: IUser = {
 };
 
 const columns: GridColDef[] = [
-	{ field: "username", headerName: "Telegram", flex: 1 },
-	{ field: "password", headerName: "Password", flex: 1 },
-	{ field: "role", headerName: "Role", flex: 1 },
-	{ field: "phone", headerName: "Phone", flex: 1 },
-	{ field: "office", headerName: "Office", flex: 1 },
+	{
+		field: "username",
+		headerName: "Telegram",
+		flex: 1,
+		renderCell: (params) => <InputColumn {...params} />,
+	},
+	{
+		field: "password",
+		headerName: "Password",
+		flex: 1,
+		renderCell: (params) => <InputColumn {...params} />,
+	},
+	{
+		field: "role",
+		headerName: "Role",
+		flex: 1,
+		renderCell: (params) => <SelectColumn {...params} />,
+	},
+	{
+		field: "phone",
+		headerName: "Phone",
+		flex: 1,
+		renderCell: (params) => <InputColumn {...params} />,
+	},
+	{
+		field: "office",
+		headerName: "Office",
+		flex: 1,
+		renderCell: (params) => <InputColumn {...params} />,
+	},
+	{
+		field: "actions",
+		type: "actions",
+		width: 20,
+		renderCell: (params) => <ActionColumn {...params} />,
+	},
 ];
 
 function Users() {
@@ -74,6 +116,11 @@ function Users() {
 		}
 	};
 
+	const handleEdit = async (id: number | string, params: Partial<IUser>) => {
+		await axios.patch(`/api/users?id=${id}`, params);
+		mutate("users");
+	};
+
 	return (
 		<Container sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2 }}>
 			<Box>
@@ -81,18 +128,18 @@ function Users() {
 					Добавить
 				</Button>
 			</Box>
-			{isLoading ? (
-				<Loading />
-			) : (
-				<DataGrid
-					autoHeight
-					loading={isLoading}
-					rows={Array.isArray(users) ? users : []}
-					columns={columns}
-					getRowId={(row) => row._id}
-					slots={{ loadingOverlay: Loading }}
-				/>
-			)}
+			<DataGrid
+				autoHeight
+				loading={isLoading}
+				rows={Array.isArray(users) ? users : []}
+				columns={columns}
+				getRowId={(row) => row._id}
+				slots={{ loadingOverlay: Loading }}
+				processRowUpdate={(updatedRow) => {
+					handleEdit(updatedRow._id, updatedRow);
+				}}
+				onProcessRowUpdateError={(error) => console.log(error)}
+			/>
 			<ConfirmDialog
 				open={open}
 				title='Создание пользователя'
@@ -105,7 +152,7 @@ function Users() {
 					validationSchema={validationSchema}
 					onSubmit={handleSubmit}>
 					<Form>
-						<Grid md={7} display='flex' flexDirection='column' gap={2}>
+						<Grid display='flex' flexDirection='column' gap={2}>
 							<FormInput name='username' />
 							<FormInput name='password' />
 							<FormInput name='telegramId' />

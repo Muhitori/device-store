@@ -36,12 +36,12 @@ export default function DevicePage() {
 		setDeviceColors(colors);
 	}, []);
 
-	const onMemoryChange = (event: SelectChangeEvent<string>) => {
-		setSelectedMemory(event.target.value);
+	const onMemoryChange = (value: string) => {
+		setSelectedMemory(value);
 	};
 
-	const onColorChange = (event: SelectChangeEvent<string>) => {
-		setSelectedColor(event.target.value);
+	const onColorChange = (value: string) => {
+		setSelectedColor(value);
 	};
 
 	const handleCreateLot = async () => {

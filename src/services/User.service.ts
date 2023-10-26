@@ -21,11 +21,11 @@ export class UserService {
 		return await users.create({ ...user });
 	}
 
-	static async update(id: string, user: Partial<UserModel>) {
-		return await users.updateOne({ id }, { ...user });
+	static async update(_id: string, user: Partial<UserModel>) {
+		return await users.findByIdAndUpdate({ _id }, { ...user });
 	}
 
-	static async delete(id: string) {
-		return await users.deleteOne({ id });
+	static async delete(_id: string) {
+		return await users.deleteOne({ _id });
 	}
 }

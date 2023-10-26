@@ -21,11 +21,11 @@ export class OrderService {
 		return await orders.create({ ...user });
 	}
 
-	static async update(id: string, user: Partial<OrderModel>) {
-		return await orders.updateOne({ id }, { ...user });
+	static async update(_id: string, user: Partial<OrderModel>) {
+		return await orders.updateOne({ _id }, { ...user });
 	}
 
-	static async delete(id: string) {
-		return await orders.deleteOne({ id });
+	static async delete(_id: string) {
+		return await orders.deleteOne({ _id });
 	}
 }

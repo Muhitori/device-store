@@ -21,8 +21,8 @@ export class LotService {
 		return await lots.create({ ...user });
 	}
 
-	static async update(id: string, user: Partial<LotModel>) {
-		return await lots.updateOne({ id }, { ...user });
+	static async update(_id: string, user: Partial<LotModel>) {
+		return await lots.updateOne({ _id }, { ...user });
 	}
 
 	static async delete(_id: string) {

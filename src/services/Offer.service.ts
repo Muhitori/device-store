@@ -21,12 +21,12 @@ export class OfferService {
 		return await offers.create({ ...user });
 	}
 
-	static async update(id: string, user: Partial<OfferModel>) {
-		return await offers.updateOne({ id }, { ...user });
+	static async update(_id: string, user: Partial<OfferModel>) {
+		return await offers.updateOne({ _id }, { ...user });
 	}
 
-	static async delete(id: string) {
-		return await offers.findByIdAndDelete(id);
+	static async delete(_id: string) {
+		return await offers.findByIdAndDelete(_id);
 	}
 
 	static async deleteMany(offer: Partial<OfferModel>) {

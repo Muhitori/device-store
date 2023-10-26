@@ -21,11 +21,11 @@ export class DeviceService {
 		return await devices.create({ ...user });
 	}
 
-	static async update(id: string, user: Partial<DeviceModel>) {
-		return await devices.updateOne({ id }, { ...user });
+	static async update(_id: string, user: Partial<DeviceModel>) {
+		return await devices.updateOne({ _id }, { ...user });
 	}
 
-	static async delete(id: string) {
-		return await devices.deleteOne({ id });
+	static async delete(_id: string) {
+		return await devices.deleteOne({ _id });
 	}
 }

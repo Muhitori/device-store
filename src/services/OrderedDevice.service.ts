@@ -24,11 +24,11 @@ export class OrderedDeviceService {
 		return await orderedDevices.create({ ...user });
 	}
 
-	static async update(id: string, user: Partial<OrderedDeviceModel>) {
-		return await orderedDevices.updateOne({ id }, { ...user });
+	static async update(_id: string, user: Partial<OrderedDeviceModel>) {
+		return await orderedDevices.updateOne({ _id }, { ...user });
 	}
 
-	static async delete(id: string) {
-		return await orderedDevices.deleteOne({ id });
+	static async delete(_id: string) {
+		return await orderedDevices.deleteOne({ _id });
 	}
 }
