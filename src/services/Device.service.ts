@@ -9,20 +9,20 @@ export class DeviceService {
 		return await devices.findById(id);
 	}
 
-	static async getBy(user: Partial<DeviceModel>) {
-		return await devices.find({ ...user });
+	static async getBy(device: Partial<DeviceModel>) {
+		return await devices.find({ ...device });
 	}
 
-	static async getOneBy(user: Partial<DeviceModel>) {
-		return await devices.findOne({ ...user });
+	static async getOneBy(device: Partial<DeviceModel>) {
+		return await devices.findOne({ ...device });
 	}
 
-	static async create(user: Partial<DeviceModel>) {
-		return await devices.create({ ...user });
+	static async create(device: Partial<DeviceModel>) {
+		return await devices.create({ ...device });
 	}
 
-	static async update(_id: string, user: Partial<DeviceModel>) {
-		return await devices.updateOne({ _id }, { ...user });
+	static async update(_id: string, device: Partial<DeviceModel>) {
+		return await devices.updateOne({ _id }, { ...device });
 	}
 
 	static async delete(_id: string) {

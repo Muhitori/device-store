@@ -11,7 +11,7 @@ import { FC } from "react";
 interface Props {
 	value: string;
 	label: string;
-	values: string[];
+	values: (string | number)[];
 	onChange: (value: string) => void;
 	sx?: SxProps;
 }
@@ -26,7 +26,7 @@ export const Select: FC<Props> = ({ value, label, values, onChange, sx }) => {
 			sx={{ width: { xs: "100%", sm: "100%", md: "50%", lg: "30%" }, ...sx }}>
 			<InputLabel>{label}</InputLabel>
 			<MuiSelect
-				value={value || values[0]}
+				value={value || String(values[0])}
 				label={label}
 				onChange={handleChange}>
 				{values.map((value) => (

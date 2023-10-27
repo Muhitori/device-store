@@ -1,4 +1,6 @@
-import { Status } from "@/lib/models/order.model";
+import { IDeviceType } from "./devices";
+
+export type IStatus = "initial" | "delivery" | "success" | "fail";
 
 export interface IOrder {
 	_id: string;
@@ -8,10 +10,10 @@ export interface IOrder {
 	seller: string;
 	orderedDeviceId: string;
 	price: number;
-	status: Status;
+	status: IStatus;
 	device: {
 		name: string;
-		type: Status;
+		type: IDeviceType;
 		memory: string;
 		color: string;
 	};

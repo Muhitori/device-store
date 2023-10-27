@@ -9,27 +9,27 @@ export class LotService {
 		return await lots.findById(id);
 	}
 
-	static async getBy(user: Partial<LotModel>) {
-		return await lots.find({ ...user });
+	static async getBy(lot: Partial<LotModel>) {
+		return await lots.find({ ...lot });
 	}
 
-	static async getOneBy(user: Partial<LotModel>) {
-		return await lots.findOne({ ...user });
+	static async getOneBy(lot: Partial<LotModel>) {
+		return await lots.findOne({ ...lot });
 	}
 
-	static async create(user: Partial<LotModel>) {
-		return await lots.create({ ...user });
+	static async create(lot: Partial<LotModel>) {
+		return await lots.create({ ...lot });
 	}
 
-	static async update(_id: string, user: Partial<LotModel>) {
-		return await lots.updateOne({ _id }, { ...user });
+	static async update(_id: string, lot: Partial<LotModel>) {
+		return await lots.updateOne({ _id }, { ...lot });
 	}
 
 	static async delete(_id: string) {
 		return await lots.deleteOne({ _id });
 	}
 
-	static async deleteMany(offer: Partial<LotModel>) {
-		return await lots.deleteOne({ ...offer });
+	static async deleteMany(lot: Partial<LotModel>) {
+		return await lots.deleteOne({ ...lot });
 	}
 }

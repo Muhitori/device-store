@@ -20,7 +20,7 @@ export default function SellerLayout({ children }: Props) {
 		<Box width='100%' height='100%'>
 			<Tabs variant='fullWidth' value={tab} onChange={handleTabChange}>
 				<Tab label='Лоты' value='lots' />
-				<Tab label='Товары' value='goods' />
+				<Tab label='Товары' value='devices' />
 			</Tabs>
 
 			{children}

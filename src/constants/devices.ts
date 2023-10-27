@@ -1,3 +1,7 @@
+import { IDeviceType } from "@/types/devices";
+
+export const types: IDeviceType[] = ["iphone"];
+
 export const DEVICES = {
 	iphone: {
 		"iPhone 11": {
@@ -43,7 +47,7 @@ export const DEVICES = {
 	},
 };
 
-const characteristics = {
+export const CHARACTERISTICS = {
 	"iPhone 11": {
 		storages: [64, 128, 256],
 		colors: [

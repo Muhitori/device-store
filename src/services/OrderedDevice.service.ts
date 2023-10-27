@@ -12,20 +12,20 @@ export class OrderedDeviceService {
 		return await orderedDevices.findById(id);
 	}
 
-	static async getBy(user: Partial<OrderedDeviceModel>) {
-		return await orderedDevices.find({ ...user });
+	static async getBy(device: Partial<OrderedDeviceModel>) {
+		return await orderedDevices.find({ ...device });
 	}
 
-	static async getOneBy(user: Partial<OrderedDeviceModel>) {
-		return await orderedDevices.findOne({ ...user });
+	static async getOneBy(device: Partial<OrderedDeviceModel>) {
+		return await orderedDevices.findOne({ ...device });
 	}
 
-	static async create(user: Partial<OrderedDeviceModel>) {
-		return await orderedDevices.create({ ...user });
+	static async create(device: Partial<OrderedDeviceModel>) {
+		return await orderedDevices.create({ ...device });
 	}
 
-	static async update(_id: string, user: Partial<OrderedDeviceModel>) {
-		return await orderedDevices.updateOne({ _id }, { ...user });
+	static async update(_id: string, device: Partial<OrderedDeviceModel>) {
+		return await orderedDevices.updateOne({ _id }, { ...device });
 	}
 
 	static async delete(_id: string) {

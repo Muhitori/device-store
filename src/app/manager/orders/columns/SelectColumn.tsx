@@ -1,18 +1,18 @@
 import { Select } from "@/components/Select";
-import { IRole } from "@/types/users";
+import { IStatus } from "@/types/order";
 import { GridRenderCellParams } from "@mui/x-data-grid";
 import axios from "axios";
 import { FC } from "react";
 import { useSWRConfig } from "swr";
 
-const roles: IRole[] = ["seller", "manager"];
+const statuses: IStatus[] = ["initial", "delivery", "success", "fail"];
 
 export const SelectColumn: FC<GridRenderCellParams> = ({ id, value, row }) => {
 	const { mutate } = useSWRConfig();
 
 	const onChange = async (value: string) => {
-		await axios.patch(`/api/users?id=${id}`, { role: value });
-		mutate("users");
+		await axios.patch(`/api/orders?id=${id}`, { status: value });
+		mutate("orders");
 	};
 
 	return (
@@ -31,7 +31,7 @@ export const SelectColumn: FC<GridRenderCellParams> = ({ id, value, row }) => {
 			}}
 			value={value}
 			label=''
-			values={roles}
+			values={statuses}
 			onChange={onChange}
 		/>
 	);

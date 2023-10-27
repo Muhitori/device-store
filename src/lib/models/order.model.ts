@@ -1,6 +1,5 @@
+import { IStatus } from "@/types/order";
 import mongoose from "mongoose";
-
-export type Status = "initial" | "delivery" | "success" | "fail";
 
 export interface OrderModel {
 	sellerId: string;
@@ -9,7 +8,7 @@ export interface OrderModel {
 	seller: string;
 	orderedDeviceId: string;
 	price: number;
-	status: Status;
+	status: IStatus;
 	createdAt: string;
 }
 

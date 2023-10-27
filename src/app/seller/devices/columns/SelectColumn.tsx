@@ -1,18 +1,34 @@
 import { Select } from "@/components/Select";
-import { IRole } from "@/types/users";
+import { CHARACTERISTICS } from "@/constants";
+import { DeviceKey } from "@/types/devices";
 import { GridRenderCellParams } from "@mui/x-data-grid";
 import axios from "axios";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useSWRConfig } from "swr";
 
-const roles: IRole[] = ["seller", "manager"];
-
-export const SelectColumn: FC<GridRenderCellParams> = ({ id, value, row }) => {
+export const SelectColumn: FC<GridRenderCellParams> = ({
+	id,
+	value,
+	row,
+	colDef,
+}) => {
 	const { mutate } = useSWRConfig();
 
+	const options = useMemo(() => {
+		if (colDef.field === "color") {
+			return CHARACTERISTICS[row.name as DeviceKey].colors;
+		}
+
+		if (colDef.field === "memory") {
+			return CHARACTERISTICS[row.name as DeviceKey].storages;
+		}
+
+		return [];
+	}, [colDef.field, row.name]);
+
 	const onChange = async (value: string) => {
-		await axios.patch(`/api/users?id=${id}`, { role: value });
-		mutate("users");
+		await axios.patch(`/api/devices?id=${id}`, { [colDef.field]: value });
+		mutate("devices");
 	};
 
 	return (
@@ -31,7 +47,7 @@ export const SelectColumn: FC<GridRenderCellParams> = ({ id, value, row }) => {
 			}}
 			value={value}
 			label=''
-			values={roles}
+			values={options}
 			onChange={onChange}
 		/>
 	);

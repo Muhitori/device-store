@@ -9,7 +9,7 @@ import {
 
 interface Props {
 	name: string;
-	options?: string[];
+	options?: (string | number)[];
 }
 
 export const FormSelect: FC<Props> = ({ name, options }) => {

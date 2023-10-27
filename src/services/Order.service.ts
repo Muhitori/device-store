@@ -9,20 +9,20 @@ export class OrderService {
 		return await orders.findById(id);
 	}
 
-	static async getBy(user: Partial<OrderModel>) {
-		return await orders.find({ ...user });
+	static async getBy(order: Partial<OrderModel>) {
+		return await orders.find({ ...order });
 	}
 
-	static async getOneBy(user: Partial<OrderModel>) {
-		return await orders.findOne({ ...user });
+	static async getOneBy(order: Partial<OrderModel>) {
+		return await orders.findOne({ ...order });
 	}
 
-	static async create(user: Partial<OrderModel>) {
-		return await orders.create({ ...user });
+	static async create(order: Partial<OrderModel>) {
+		return await orders.create({ ...order });
 	}
 
-	static async update(_id: string, user: Partial<OrderModel>) {
-		return await orders.updateOne({ _id }, { ...user });
+	static async update(_id: string, order: Partial<OrderModel>) {
+		return await orders.updateOne({ _id }, { ...order });
 	}
 
 	static async delete(_id: string) {

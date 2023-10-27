@@ -9,20 +9,20 @@ export class OfferService {
 		return await offers.findById(id);
 	}
 
-	static async getBy(user: Partial<OfferModel>) {
-		return await offers.find({ ...user });
+	static async getBy(offer: Partial<OfferModel>) {
+		return await offers.find({ ...offer });
 	}
 
-	static async getOneBy(user: Partial<OfferModel>) {
-		return await offers.findOne({ ...user });
+	static async getOneBy(offer: Partial<OfferModel>) {
+		return await offers.findOne({ ...offer });
 	}
 
-	static async create(user: Partial<OfferModel>) {
-		return await offers.create({ ...user });
+	static async create(offer: Partial<OfferModel>) {
+		return await offers.create({ ...offer });
 	}
 
-	static async update(_id: string, user: Partial<OfferModel>) {
-		return await offers.updateOne({ _id }, { ...user });
+	static async update(_id: string, offer: Partial<OfferModel>) {
+		return await offers.updateOne({ _id }, { ...offer });
 	}
 
 	static async delete(_id: string) {
