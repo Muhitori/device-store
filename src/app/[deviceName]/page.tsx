@@ -50,7 +50,7 @@ export default function DevicePage() {
 				throw new Error("Проблема с телеграмом.");
 			}
 
-			axios.post("/api/lot", {
+			axios.post("/api/lots", {
 				customerId: user.id,
 				customer: user.username,
 				name: deviceName,

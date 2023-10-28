@@ -32,17 +32,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
 	const { customerId, customer, ...device } = await request.json();
 
-	// await fetch(
-	// 	`https://api.telegram.org/bot$${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-	// 	{
-	// 		method: "POST",
-	// 		body: {
-	// 			chat_id: customerId,
-	// 			text: "This is a test",
-	// 		},
-	// 	}
-	// );
-
 	await dbConnect();
 	const orderedDevice = await OrderedDeviceService.create({ ...device });
 	const sellers = await UserService.getBy({ role: "seller" });
