@@ -1,43 +1,40 @@
 "use client";
+
 import { Select } from "@/components/Select";
-import {
-	Box,
-	Button,
-	Divider,
-	SelectChangeEvent,
-	Typography,
-} from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { Box, Button, Divider, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter, useParams } from "next/navigation";
 import { snackbarGenerator } from "@/ui/SnackbarGenerator";
 import axios from "axios";
 import { useTelegram } from "@/providers/Telegram.provider";
-import { colors, memories } from "@/constants";
+import { DeviceKey } from "@/types/devices";
+import { CHARACTERISTICS } from "@/constants";
 
 export default function DevicePage() {
 	const router = useRouter();
 	const params = useParams();
 	const { user } = useTelegram();
 
-	const [deviceMemories, setDeviceMemories] = useState<string[]>([]);
-	const [deviceColors, setDeviceColors] = useState<string[]>([]);
-
-	const [selectedMemory, setSelectedMemory] = useState(memories[0]);
-	const [selectedColor, setSelectedColor] = useState(colors[0]);
-
 	const deviceName = useMemo(
-		() => (params.deviceName as string).replace(/%20/g, " "),
+		() => (params.deviceName as string).replace(/%20/g, " ") as DeviceKey,
 		[params]
 	);
 
-	useEffect(() => {
-		setDeviceMemories(memories);
-		setDeviceColors(colors);
-	}, []);
+	const deviceMemories = useMemo(
+		() => CHARACTERISTICS[deviceName]?.storages,
+		[deviceName]
+	);
+	const deviceColors = useMemo(
+		() => CHARACTERISTICS[deviceName]?.colors,
+		[deviceName]
+	);
+
+	const [selectedMemory, setSelectedMemory] = useState(deviceMemories[0]);
+	const [selectedColor, setSelectedColor] = useState(deviceColors[0]);
 
 	const onMemoryChange = (value: string) => {
-		setSelectedMemory(value);
+		setSelectedMemory(parseInt(value));
 	};
 
 	const onColorChange = (value: string) => {

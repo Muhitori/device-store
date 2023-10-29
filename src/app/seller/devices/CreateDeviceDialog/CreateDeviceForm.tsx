@@ -7,21 +7,22 @@ import { useFormikContext, Form } from "formik";
 
 export const CreateDeviceForm = () => {
 	const { values } = useFormikContext<Device>();
+	const name = values.name as DeviceKey;
 
 	return (
 		<Form>
 			<Grid display='flex' flexDirection='column' gap={2}>
 				<FormInput name='name' />
-				{CHARACTERISTICS[values.name as DeviceKey] && (
+				{CHARACTERISTICS[name] && (
 					<FormSelect
 						name='memory'
-						options={CHARACTERISTICS[values.name as DeviceKey].storages || []}
+						options={CHARACTERISTICS[name].storages || []}
 					/>
 				)}
-				{CHARACTERISTICS[values.name as DeviceKey] && (
+				{CHARACTERISTICS[name] && (
 					<FormSelect
 						name='color'
-						options={CHARACTERISTICS[values.name as DeviceKey].colors || []}
+						options={CHARACTERISTICS[name].colors || []}
 					/>
 				)}
 				<FormSelect name='type' options={types} />

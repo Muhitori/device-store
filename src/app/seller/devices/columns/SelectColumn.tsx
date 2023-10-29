@@ -13,18 +13,19 @@ export const SelectColumn: FC<GridRenderCellParams> = ({
 	colDef,
 }) => {
 	const { mutate } = useSWRConfig();
+	const name = useMemo(() => row.name as DeviceKey, [row.name]);
 
 	const options = useMemo(() => {
 		if (colDef.field === "color") {
-			return CHARACTERISTICS[row.name as DeviceKey].colors;
+			return CHARACTERISTICS[name].colors;
 		}
 
 		if (colDef.field === "memory") {
-			return CHARACTERISTICS[row.name as DeviceKey].storages;
+			return CHARACTERISTICS[name].storages;
 		}
 
 		return [];
-	}, [colDef.field, row.name]);
+	}, [colDef.field, name]);
 
 	const onChange = async (value: string) => {
 		await axios.patch(`/api/devices?id=${id}`, { [colDef.field]: value });
