@@ -18,7 +18,7 @@ export const DeviceOffer: FC<Props> = ({ offer, onOrderClick }) => {
 		try {
 			await axios.post("/api/orders", offer);
 
-			mutate("offer");
+			mutate("offers");
 			onOrderClick();
 		} catch (err) {
 			snackbarGenerator.error("Возникла ошибка.");
@@ -29,7 +29,7 @@ export const DeviceOffer: FC<Props> = ({ offer, onOrderClick }) => {
 		try {
 			await axios.delete(`/api/offers?id=${offer._id}`);
 
-			mutate("offer");
+			mutate("offers");
 			snackbarGenerator.success("Предложение удалено.");
 		} catch (err) {
 			snackbarGenerator.error("Возникла ошибка.");
