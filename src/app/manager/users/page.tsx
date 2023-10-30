@@ -28,6 +28,12 @@ const columns: GridColDef[] = [
 		renderCell: (params) => <InputColumn {...params} />,
 	},
 	{
+		field: "telegramId",
+		headerName: "Telegram ID",
+		flex: 1,
+		renderCell: (params) => <InputColumn {...params} />,
+	},
+	{
 		field: "role",
 		headerName: "Role",
 		flex: 1,

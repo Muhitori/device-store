@@ -38,7 +38,7 @@ export const DeviceOffer: FC<Props> = ({ offer, onOrderClick }) => {
 
 	return (
 		<Paper
-			elevation={1}
+			variant='outlined'
 			sx={{ display: "flex", flexDirection: "column", p: 2 }}>
 			<Article label='Устройство' value={name} />
 			<Article label='Цвет' value={color} />

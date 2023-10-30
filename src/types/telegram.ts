@@ -1,3 +1,23 @@
+export interface TelegramButton {
+	text: string;
+	web_app?: {
+		url: string;
+	};
+
+	url?: string;
+	callback_data?: string;
+}
+
+export interface TelegramThemeParams {
+	link_color: string;
+	button_color: string;
+	button_text_color: string;
+	secondary_bg_color: string;
+	hint_color: string;
+	bg_color: string;
+	text_color: string;
+}
+
 export interface ITelegramUser {
 	id: number;
 	first_name: string;
@@ -17,15 +37,7 @@ export interface IWebApp {
 	version: string;
 	platform: string;
 	colorScheme: string;
-	themeParams: {
-		link_color: string;
-		button_color: string;
-		button_text_color: string;
-		secondary_bg_color: string;
-		hint_color: string;
-		bg_color: string;
-		text_color: string;
-	};
+	themeParams: TelegramThemeParams;
 	isExpanded: boolean;
 	viewportHeight: number;
 	viewportStableHeight: number;

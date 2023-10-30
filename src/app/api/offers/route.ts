@@ -2,13 +2,14 @@ import dbConnect from "@/lib/dbConnect";
 import { LotService } from "@/services/Lot.service";
 import { OfferService } from "@/services/Offer.service";
 import { OrderedDeviceService } from "@/services/OrderedDevice.service";
+import { TelegramService } from "@/services/Telegram.service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
 	const customerId = searchParams.get("customerId");
 
-	if (!customerId) {
+	if (!customerId || customerId === "undefined") {
 		return NextResponse.error();
 	}
 
@@ -41,6 +42,21 @@ export async function POST(request: NextRequest) {
 		price,
 	});
 	await LotService.delete(_id);
+
+	const { _doc: device } = await OrderedDeviceService.getById(orderedDeviceId);
+
+	await TelegramService.sendMessage(
+		customerId,
+		`У вас появилось предложение на ${device.name}.`,
+		[
+			{
+				text: "Предложения",
+				web_app: {
+					url: `${process.env.BASE_URL}/offers`,
+				},
+			},
+		]
+	);
 
 	return NextResponse.json({});
 }

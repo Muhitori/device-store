@@ -14,7 +14,7 @@ export const DeviceCard: FC<Props> = ({ name, src, timeout }) => {
 	return (
 		<Grow in={true} timeout={timeout} style={{ transformOrigin: "0 0 0" }}>
 			<Paper
-				elevation={0}
+				variant='outlined'
 				sx={{
 					width: "30%",
 					height: { xs: "200px", sm: "320px", md: "350px", lg: "350px" },

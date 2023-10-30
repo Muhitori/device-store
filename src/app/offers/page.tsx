@@ -6,8 +6,8 @@ import { useTelegram } from "@/providers/Telegram.provider";
 import { offersFetcher } from "@/services/fetchers";
 import { IOffer } from "@/types/offer";
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
-import useSWR from "swr";
+import { useEffect, useMemo, useState } from "react";
+import useSWR, { mutate } from "swr";
 
 export default function CreateOrderPage() {
 	const { user } = useTelegram();
@@ -19,6 +19,10 @@ export default function CreateOrderPage() {
 		error,
 		isLoading,
 	} = useSWR("offers", offersFetcher(user?.id));
+
+	useEffect(() => {
+		mutate("offers");
+	}, [user?.id]);
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);

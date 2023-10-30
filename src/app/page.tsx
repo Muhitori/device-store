@@ -1,20 +1,11 @@
 "use client";
 import { DeviceCard } from "@/components/DeviceCard";
 import { DEVICES } from "@/constants/devices";
-import { useAppDispatch } from "@/store/hooks";
-import { toggleTheme } from "@/store/slices/ui.slice";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function Home() {
-	const dispatch = useAppDispatch();
-
-	const clickHandler = () => dispatch(toggleTheme());
-
 	return (
 		<Box width='100%' height='100%' p={2}>
-			<Button variant='contained' onClick={clickHandler}>
-				Toggle
-			</Button>
 			<Box
 				display='flex'
 				flexDirection='column'

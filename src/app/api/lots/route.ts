@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { LotService } from "@/services/Lot.service";
 import { OrderedDeviceService } from "@/services/OrderedDevice.service";
+import { TelegramService } from "@/services/Telegram.service";
 import { UserService } from "@/services/User.service";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -43,7 +44,33 @@ export async function POST(request: NextRequest) {
 			sellerId: seller._id,
 			orderedDeviceId: orderedDevice._id,
 		});
+
+		if (seller.telegramId) {
+			await TelegramService.sendMessage(
+				seller.telegramId,
+				`У вас появился новый лот на ${device.name}.`,
+				[
+					{
+						text: "Приложение",
+						web_app: {
+							url: `${process.env.BASE_URL}/seller/lots`,
+						},
+					},
+					{
+						text: "Сайт",
+						web_app: {
+							url: `${process.env.BASE_URL}/seller/lots`,
+						},
+					},
+				]
+			);
+		}
 	});
+
+	await TelegramService.sendMessage(
+		customerId,
+		`Вы создали запрос на ${device.name}. Когда появятся предложения, мы вас оповестим.`
+	);
 
 	return NextResponse.json({ id: orderedDevice._id });
 }

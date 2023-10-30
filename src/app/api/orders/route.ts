@@ -3,6 +3,7 @@ import { LotService } from "@/services/Lot.service";
 import { OfferService } from "@/services/Offer.service";
 import { OrderService } from "@/services/Order.service";
 import { OrderedDeviceService } from "@/services/OrderedDevice.service";
+import { TelegramService } from "@/services/Telegram.service";
 import { UserService } from "@/services/User.service";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -43,6 +44,19 @@ export async function POST(request: NextRequest) {
 		price,
 		status,
 	});
+
+	const { _doc: device } = await OrderedDeviceService.getById(orderedDeviceId);
+	const { _doc: admin } = await UserService.getOneBy({ role: "manager" });
+	await TelegramService.sendMessage(
+		admin.telegramId,
+		`Новый заказ на ${device.name}.`,
+		[
+			{
+				text: "Заказы",
+				url: `${process.env.BASE_URL}/manager/orders`,
+			},
+		]
+	);
 
 	return NextResponse.json({});
 }

@@ -1,6 +1,5 @@
 import "./globals.css";
 import { MuiThemeProvider } from "@/providers/MuiTheme.provider";
-import { ReduxProvider } from "@/providers/Redux.provider";
 import type { Metadata } from "next";
 import { NotistackProvider } from "@/providers/Notistack.provider";
 import { getServerSession } from "next-auth";
@@ -23,15 +22,15 @@ const RootLayout: React.FC<Props> = async ({ children }) => {
 	return (
 		<html lang='en'>
 			<body>
-				<ReduxProvider>
+				<TelegramProvider>
 					<MuiThemeProvider options={{ key: "mui" }}>
 						<NotistackProvider>
 							<AuthSessionProvider session={session}>
-								<TelegramProvider>{children}</TelegramProvider>
+								{children}
 							</AuthSessionProvider>
 						</NotistackProvider>
 					</MuiThemeProvider>
-				</ReduxProvider>
+				</TelegramProvider>
 			</body>
 		</html>
 	);

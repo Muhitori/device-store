@@ -1,29 +1,28 @@
+import { TelegramButton } from "@/types/telegram";
 import axios from "axios";
+
+const TELEGRAM_URL = "https://api.telegram.org";
 
 export class TelegramService {
 	static async sendMessage(
 		userId: string | number,
 		text: string,
-		buttonText: string,
-		url: string
+		buttons?: TelegramButton[]
 	) {
+		const markup = buttons?.length
+			? {
+					reply_markup: {
+						inline_keyboard: [buttons],
+					},
+			  }
+			: {};
+
 		await axios.post(
-			`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+			`${TELEGRAM_URL}/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
 			{
 				chat_id: userId,
 				text: text,
-				reply_markup: {
-					inline_keyboard: [
-						[
-							{
-								text: buttonText,
-								web_app: {
-									url: url,
-								},
-							},
-						],
-					],
-				},
+				...markup,
 			}
 		);
 	}
