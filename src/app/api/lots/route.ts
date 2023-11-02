@@ -22,6 +22,7 @@ const createLot = async (
 ) => {
 	const { name, color, memory, type } = device;
 	const sellerDeviceDoc = await DeviceService.getOneBy({
+		sellerId: seller._id,
 		name,
 		color,
 		memory,
