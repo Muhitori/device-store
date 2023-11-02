@@ -16,13 +16,13 @@ export const CreateDeviceForm = () => {
 				{CHARACTERISTICS[name] && (
 					<FormSelect
 						name='memory'
-						options={CHARACTERISTICS[name].storages || []}
+						options={CHARACTERISTICS[name]?.storages || []}
 					/>
 				)}
 				{CHARACTERISTICS[name] && (
 					<FormSelect
 						name='color'
-						options={CHARACTERISTICS[name].colors || []}
+						options={CHARACTERISTICS[name]?.colors || []}
 					/>
 				)}
 				<FormSelect name='type' options={types} />

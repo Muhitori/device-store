@@ -17,11 +17,11 @@ export const SelectColumn: FC<GridRenderCellParams> = ({
 
 	const options = useMemo(() => {
 		if (colDef.field === "color") {
-			return CHARACTERISTICS[name].colors;
+			return CHARACTERISTICS[name]?.colors || [];
 		}
 
 		if (colDef.field === "memory") {
-			return CHARACTERISTICS[name].storages;
+			return CHARACTERISTICS[name]?.storages || [];
 		}
 
 		return [];
