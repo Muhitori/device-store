@@ -3,6 +3,7 @@ import { OrderedDeviceModel } from "@/lib/models/orderedDevice.ts";
 import { UserModel } from "@/lib/models/user.model";
 import { DeviceService } from "@/services/Device.service";
 import { LotService } from "@/services/Lot.service";
+import { OfferService } from "@/services/Offer.service";
 import { OrderedDeviceService } from "@/services/OrderedDevice.service";
 import { TelegramService } from "@/services/Telegram.service";
 import { UserService } from "@/services/User.service";
@@ -10,7 +11,7 @@ import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
 
 type UserModelWithId = UserModel & { _id: string };
-type OrderedDeviceModelWithId = UserModel & { _id: string };
+type OrderedDeviceModelWithId = OrderedDeviceModel & { _id: string };
 
 const createLot = async (
 	customerId: string,
@@ -20,24 +21,34 @@ const createLot = async (
 	device: Partial<OrderedDeviceModel>
 ) => {
 	const { name, color, memory, type } = device;
-	const { _doc: sellerDevice } = await DeviceService.getOneBy({
+	const sellerDeviceDoc = await DeviceService.getOneBy({
 		name,
 		color,
 		memory,
 	});
 
-	if (sellerDevice.price) {
-		axios.post("/api/offers", {
-			customerId: customerId,
-			customer: customer,
+	if (sellerDeviceDoc) {
+		await OfferService.create({
 			sellerId: seller._id,
+			customerId,
+			customer,
 			orderedDeviceId: orderedDevice._id,
-			name,
-			type,
-			memory,
-			color,
-			price: sellerDevice.price,
+			price: sellerDeviceDoc._doc.price,
 		});
+
+		await TelegramService.sendMessage(
+			customerId,
+			`У вас появилось предложение на ${device.name}.`,
+			[
+				{
+					text: "Предложения",
+					web_app: {
+						url: `${process.env.BASE_URL}/offers`,
+					},
+				},
+			]
+		);
+
 		return;
 	}
 
@@ -96,20 +107,24 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-	const { customerId, customer, ...device } = await request.json();
+	try {
+		const { customerId, customer, ...device } = await request.json();
 
-	await dbConnect();
-	const orderedDevice = await OrderedDeviceService.create({ ...device });
-	const sellers = await UserService.getBy({ role: "seller" });
+		await dbConnect();
+		const orderedDevice = await OrderedDeviceService.create({ ...device });
+		const sellers = await UserService.getBy({ role: "seller" });
 
-	sellers.forEach(async (seller) => {
-		await createLot(customerId, customer, seller, orderedDevice, device);
-	});
+		await TelegramService.sendMessage(
+			customerId,
+			`Вы создали запрос на ${device.name}. Когда появятся предложения, мы вас оповестим.`
+		);
 
-	await TelegramService.sendMessage(
-		customerId,
-		`Вы создали запрос на ${device.name}. Когда появятся предложения, мы вас оповестим.`
-	);
+		sellers.forEach(async (seller) => {
+			await createLot(customerId, customer, seller, orderedDevice, device);
+		});
 
-	return NextResponse.json({ id: orderedDevice._id });
+		return NextResponse.json({ id: orderedDevice._id });
+	} catch (err) {
+		return NextResponse.error();
+	}
 }

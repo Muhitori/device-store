@@ -30,6 +30,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+	console.log(await request.json());
 	const { _id, sellerId, customerId, customer, orderedDeviceId, price } =
 		await request.json();
 
